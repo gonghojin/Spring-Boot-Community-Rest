@@ -8,11 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.PagedResources.PageMetadata;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -28,7 +27,7 @@ public class BoardRestController {
     public ResponseEntity<?> getBoards(@PageableDefault Pageable pageable) {
         Page<Board> boards = boardRepository.findAll(pageable);
         PageMetadata pageMetadata = new PageMetadata(pageable.getPageSize(), boards.getNumber(), boards.getTotalElements());
-                                                        // 전체 페이지 수, 현재 페이지 번호, 총 게시판 수
+        // 전체 페이지 수, 현재 페이지 번호, 총 게시판 수
         /*
             링크를 추가한 RESTful 데이터를 생성 [HATEOAS 적용]
             만약 게시판과 관련된 페이지의 링크들을 추가한다면?
@@ -56,5 +55,28 @@ public class BoardRestController {
         return ResponseEntity.ok(resources);
     }
 
+    @PostMapping
+    public ResponseEntity<?> postBoard(@RequestBody Board board) {
+        boardRepository.save(board);
 
+        return new ResponseEntity<>("{}", HttpStatus.CREATED);
+    }
+
+    @PutMapping("{idx}")
+    public ResponseEntity<?> putBoard(@PathVariable("idx") Long idx, @RequestBody Board board) {
+        Board persistBoard = boardRepository.getOne(idx);
+        if (persistBoard != null) {
+            persistBoard.updateDomain(board);
+            boardRepository.save(board);
+        }
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
+
+    @DeleteMapping("{idx}")
+    public ResponseEntity<?> deleteBoard(@PathVariable("idx") Long idx) {
+        boardRepository.deleteById(idx);
+
+        return new ResponseEntity<>("{}", HttpStatus.OK);
+    }
 }

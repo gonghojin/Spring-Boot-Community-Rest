@@ -12,11 +12,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table
-public class Board extends BaseTimeEntity implements Serializable {
+public class Board extends BaseTimeEntity{
 
     @Id
     @Column
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
@@ -38,5 +38,12 @@ public class Board extends BaseTimeEntity implements Serializable {
         this.subTitle = subTitle;
         this.content = content;
         this.boardType = boardType;
+    }
+
+    public void updateDomain(Board board) {
+        this.title = board.getTitle();
+        this.subTitle = board.getSubTitle();
+        this.content = board.getContent();
+        this.boardType = board.getBoardType();
     }
 }

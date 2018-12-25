@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc;mysql://localhost:3306/selfStudy
+    url: jdbc:mysql://localhost:3306/selfStudy
     username: selfStudy
     password: selfStudyPw
     driver-class-name: com.mysql.jdbc.Driver

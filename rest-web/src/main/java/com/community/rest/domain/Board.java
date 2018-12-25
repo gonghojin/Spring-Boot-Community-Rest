@@ -6,13 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table
-public class Board extends BaseTimeEntity{
+public class Board extends BaseTimeEntity {
 
     @Id
     @Column
@@ -32,12 +31,16 @@ public class Board extends BaseTimeEntity{
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @Builder
-    public Board(String title, String subTitle, String content, BoardType boardType) {
+    public Board(String title, String subTitle, String content, BoardType boardType, User user) {
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
         this.boardType = boardType;
+        this.user = user;
     }
 
     public void updateDomain(Board board) {

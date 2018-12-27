@@ -1,17 +1,20 @@
 package com.community.rest.domain;
 
 import com.community.rest.domain.enums.BoardType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table
-public class Board extends BaseTimeEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Board extends BaseTimeEntity implements Serializable {
 
     @Id
     @Column

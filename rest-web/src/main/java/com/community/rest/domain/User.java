@@ -12,8 +12,8 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // 1. https://stackoverflow.com/questions/24994440/no-serializer-found-for-class-org-hibernate-proxy-pojo-javassist-javassist
+@Table                                                             // 발생 오류 : http://developerhjg.tistory.com/204
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})     // 1. https://stackoverflow.com/questions/24994440/no-serializer-found-for-class-org-hibernate-proxy-pojo-javassist-javassist
 public class User extends BaseTimeEntity implements Serializable { // 2. https://zero2hex.github.io/2016/07/25/daily-devnote-20160725/
 
     @Id

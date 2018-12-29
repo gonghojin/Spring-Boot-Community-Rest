@@ -13,7 +13,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Board extends BaseTimeEntity implements Serializable {
 
     @Id

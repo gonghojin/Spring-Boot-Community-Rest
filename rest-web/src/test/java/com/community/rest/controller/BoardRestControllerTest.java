@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -102,5 +103,15 @@ public class BoardRestControllerTest {
         assertThat(board.getBoardType()).isEqualTo(BoardType.free);
         assertThat(board.getContent()).isEqualTo("수정_내용");
 
+    }
+
+    @Test
+    public void 글_삭제_테스트() throws Exception {
+        this.mvc.perform(
+            delete("/api/boards/{idx}", 1)
+            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk()
+        );
     }
 }

@@ -1,6 +1,7 @@
 package com.community.rest.domain;
 
 import com.community.rest.domain.enums.SocialType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +26,25 @@ public class User extends BaseTimeEntity implements Serializable { // 2. https:/
     private String name;
 
     @Column
+    @JsonIgnore // 반환값에 미포함 방법 1
+    /**
+     * ex) 적용 전
+     *   "users" : [ {
+     *       "createdDate" : "2018-12-30T15:10:46",
+     *       "updatedDate" : "2018-12-30T15:10:46",
+     *       "name" : "gongdel",
+     *       "password" : "test",
+     *       "email" : "x@gmail.com",
+     *          ....
+     *       }
+     *     적용 후
+     *     "users" : [ {
+     *       "createdDate" : "2018-12-30T15:10:46",
+     *       "updatedDate" : "2018-12-30T15:10:46",
+     *       "name" : "gongdel",
+     *       "email" : "x@gmail.com",
+     *           ...
+     */
     private String password;
     @Column
     private String email;

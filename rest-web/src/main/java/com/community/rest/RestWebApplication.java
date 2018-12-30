@@ -27,7 +27,7 @@ public class RestWebApplication {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             CorsConfiguration configuration = new CorsConfiguration();
-            configuration.addAllowedOrigin(CorsConfiguration.ALL); // CorsConfiguration == *
+            configuration.addAllowedOrigin(CorsConfiguration.ALL); // CorsConfiguration.ALL == *
             configuration.addAllowedMethod(CorsConfiguration.ALL);
             configuration.addAllowedHeader(CorsConfiguration.ALL);
 

@@ -1,8 +1,10 @@
 package com.community.rest.repository;
 
 import com.community.rest.domain.Board;
+import com.community.rest.domain.projection.BoardOnlyContainTitle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * @RepositoryRestRource:
@@ -11,6 +13,13 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *  그 로직은 해당 도메인의 정보를 매핑하여 Rest API를 제공하는 역할
  *  - 서비스 단에서 별도의 비즈니스 로직없이 클라이언트와 매핑만 필요할 때 MVC패턴대신 사용
  */
-@RepositoryRestResource
+@RepositoryRestResource(excerptProjection = BoardOnlyContainTitle.class)
 public interface BoardRepository extends JpaRepository<Board, Long> {
+
+    /**
+     * save() 메소드에 ADMIN 권한 지정하기
+     */
+    @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    <S extends Board> S save(S entity);
 }

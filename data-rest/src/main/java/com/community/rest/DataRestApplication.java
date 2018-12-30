@@ -1,5 +1,6 @@
 package com.community.rest;
 
+import com.community.rest.event.BoardEventHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -52,6 +53,11 @@ public class DataRestApplication {
 
         @Bean
         InMemoryUserDetailsManager userDetailsManager() {
+            /**
+             * 스프링 부트 2.0(시큐리티 5.0이상)부터는 암호화 인코딩 방식을 지정해야함.
+             * 예를들어, sha256방식은 {sha256}과 같이 지정해야 함.
+             * 예제에서는 인코딩 방식을 지정하지 않기 위해 {noop}로 표기
+             */
             User.UserBuilder commonUser = User.withUsername("commonUser")
                     .password("{noop}common").roles("USER");
             User.UserBuilder gongdel = User.withUsername("gongdel")
@@ -62,6 +68,11 @@ public class DataRestApplication {
             userDetailsList.add(gongdel.build());
 
             return new InMemoryUserDetailsManager(userDetailsList);
+        }
+
+        @Bean
+        BoardEventHandler boardEventHandler() {
+            return new BoardEventHandler();
         }
     }
 }

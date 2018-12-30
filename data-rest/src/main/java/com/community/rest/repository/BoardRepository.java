@@ -22,4 +22,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     <S extends Board> S save(S entity);
+
+
 }

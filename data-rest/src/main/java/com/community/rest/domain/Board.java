@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table
-public class Board extends BaseTimeEntity implements Serializable {
+public class Board /*extends BaseTimeEntity */implements Serializable {
 
     @Id
     @Column
@@ -34,6 +35,19 @@ public class Board extends BaseTimeEntity implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @Column
+    private LocalDateTime createdDate;
+    @Column
+    private LocalDateTime updatedDate;
+
+    public void setCreatedDateNow() {
+        this.createdDate = LocalDateTime.now();
+    }
+
+    public void setUpdatedDate() {
+        this.updatedDate = LocalDateTime.now();
+    }
 
     @Builder
     public Board(String title, String subTitle, String content, BoardType boardType, User user) {
